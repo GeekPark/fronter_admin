@@ -1,0 +1,9 @@
+default: &default
+  api:
+  account:
+  main:
+  title: 前沿社管理后台
+development:
+  <<: *default
+production:
+  <<: *default
