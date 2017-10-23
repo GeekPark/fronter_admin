@@ -2,7 +2,7 @@
 #admin-posts.admin
   .admin-header
     .title
-      h1 {{$route.meta.title}}
+      h1 {{$route.meta.title}} {{info.name}}
   info(:info='info')
   .state
     p 状态
@@ -21,7 +21,7 @@
 import api from 'stores/api'
 import UserInfo from 'components/UserInfo.vue'
 
-const url = 'admin/member_applies'
+const url = 'admin/observers_applies'
 
 export default {
   components: {
@@ -46,7 +46,11 @@ export default {
   methods: {
     fetch () {
       api.get(`${url}/${this.$route.params.id}`).then((result) => {
-        this.info = result.data.member_apply
+        console.log(result.data)
+        this.info = result.data.observers_apply
+        Object.keys(this.params).forEach(key => {
+          this.params[key] = this.info[key]
+        })
         this.states.forEach(el => {
           if (el.title === this.info.status) {
             this.params.status = el.val
@@ -67,7 +71,15 @@ export default {
       })
     },
     close () {
-      this.$router.push('/member/apply')
+      this.$router.push('/observer/apply')
+    },
+    uploadImage (img) {
+      this.params.avatar_id = img.id
+      this.params.avatar_url = ''
+    },
+    uploadDelete () {
+      this.params.avatar_url = 'deleted'
+      this.params.avatar_id = ''
     }
   },
   mounted () {
@@ -79,7 +91,7 @@ export default {
 <style lang="stylus" scoped>
 .state
   margin-bottom 20px
-  p
-    margin-top 20px
-    font-size 14px
+.el-input, .el-textarea
+  width 30%
+  min-width 200px
 </style>

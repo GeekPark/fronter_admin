@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 // import config from './config'
 
 import Observers from 'views/Observers.vue'
+import ObserverInfo from 'views/ObserverInfo.vue'
 import ObserverApply from 'views/ObserverApply.vue'
+import ObserverApplyInfo from 'views/ObserverApplyInfo.vue'
 import Members from 'views/Members.vue'
 import MemberInfo from 'views/MemberInfo.vue'
 import MemberApply from 'views/MemberApply.vue'
@@ -55,6 +57,16 @@ const router = new VueRouter({
       name: 'ObserverApply',
       component: ObserverApply,
       meta: {title: '观察员申请'}
+    },
+    { path: '/observer/:id',
+      name: 'ObserverInfo',
+      component: ObserverInfo,
+      meta: {title: '观察员'}
+    },
+    { path: '/observer/apply/:id',
+      name: 'ObserverApplyInfo',
+      component: ObserverApplyInfo,
+      meta: {title: '观察员申请详情'}
     },
     { path: '/observers',
       name: 'Observers',

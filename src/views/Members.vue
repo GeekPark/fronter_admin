@@ -23,15 +23,16 @@
   el-table(:data='listData.member_manages' border)
     el-table-column(prop='show_name', label='姓名')
     el-table-column(prop='show_company', label='公司', width="150")
-    el-table-column(prop='show_duty', label='位置', width="110")
-    el-table-column(prop='join_time', label='申请时间', width="180")
+    el-table-column(prop='show_duty', label='职位', width="110")
+    el-table-column(prop='join_time', label='加入时间', width="180")
+    el-table-column(prop='failure_time', label='到期时间', width="180")
     el-table-column(prop='status', label='状态', width="90")
     el-table-column(label='操作', width="140")
       template(scope='scope')
         el-button(type='text',
-                  @click='handleEdit(scope.$index, scope.row)') 编辑
+                  @click='handleEdit(scope.row)') 编辑
         el-button(type='text',
-                  @click='handleDestroy(scope.$index, scope.row)') 删除
+                  @click='handleDestroy(scope.row)') 删除
   el-pagination(@current-change='handleCurrentChange',
                 :current-page='params.page',
                 :page-size='listData.meta.limit_value',
@@ -79,7 +80,8 @@ export default {
       api.get(url, {params: params}).then((result) => {
         this.listData = result.data
         this.listData.member_manages.forEach(el => {
-          el.join_time = tools.moment(new Date(el.join_time))
+          el.join_time = el.join_time ? tools.moment(new Date(el.join_time)) : ''
+          el.failure_time = el.failure_time ? tools.moment(new Date(el.failure_time)) : ''
         })
       }).catch((err) => {
         console.log(err)
@@ -98,7 +100,7 @@ export default {
       }
       tools.deleteConfirm(this, destroy)
     },
-    handleEdit (index, row) {
+    handleEdit (row) {
       this.$router.push(`member/${row.id}`)
     }
   },
