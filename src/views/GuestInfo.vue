@@ -3,24 +3,15 @@
   .admin-header
     .title
       h1 {{$route.meta.title}} {{info.name}}
-  info(:info='info')
   el-form(ref='member-form', :model='params', label-width='150px', label-position='top')
-    el-form-item(label='加入日期')
-      el-date-picker(v-model='params.join_time',
-                     type='datetime',
-                     placeholder='选择日期时间')
-    el-form-item(label='失效日期')
-      el-date-picker(v-model='params.failure_time',
-                     type='datetime',
-                     placeholder='选择日期时间')
     el-form-item(label='姓名')
       el-input(placeholder='', v-model='params.name')
     el-form-item(label='公司')
-      el-input(v-model='params.company_name')
+      el-input(v-model='params.company')
     el-form-item(label='职务')
       el-input(v-model='params.duty')
     el-form-item(label='简介')
-      el-input(type='textarea',  v-model='params.show_description')
+      el-input(type='textarea',  v-model='params.description')
     el-form-item(label='头像')
       upload(:callback='uploadImage', :url='params.avatar_url', :uploadDelete="uploadDelete")
     el-form-item(label='')
@@ -32,7 +23,7 @@
 // import tools from 'tools'
 import api from 'stores/api'
 
-const url = 'admin/member_manages'
+const url = 'admin/guests'
 
 export default {
   data () {
@@ -40,12 +31,10 @@ export default {
       info: {},
       disabled: false,
       params: {
-        failure_time: '',
-        join_time: '',
         name: '',
-        company_name: '',
+        company: '',
         duty: '',
-        show_description: '',
+        description: '',
         avatar_url: '',
         avatar_id: ''
       }
@@ -54,7 +43,7 @@ export default {
   methods: {
     fetch () {
       api.get(`${url}/${this.$route.params.id}`).then((result) => {
-        this.info = result.data.member_manage
+        this.info = result.data.guest
         Object.keys(this.params).forEach(key => {
           this.params[key] = this.info[key]
         })
@@ -64,16 +53,18 @@ export default {
       })
     },
     submit () {
-      api.put(`${url}/${this.$route.params.id}`, this.params).then((result) => {
+      const handle = (result) => {
         this.$message.success('success')
         this.close()
-      }).catch((err) => {
-        console.log(err)
-        this.$message.error(err.toString())
-      })
+      }
+      if (this.$route.params.id) {
+        api.put(`${url}/${this.$route.params.id}`, this.params).then(handle)
+      } else {
+        api.post(url, this.params).then(handle)
+      }
     },
     close () {
-      this.$router.push('/members')
+      this.$router.push('/guests')
     },
     uploadImage (img) {
       this.params.avatar_id = img.id
@@ -85,7 +76,9 @@ export default {
     }
   },
   mounted () {
-    this.fetch()
+    if (this.$route.params.id) {
+      this.fetch()
+    }
   }
 }
 </script>

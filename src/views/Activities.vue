@@ -3,8 +3,8 @@
   .admin-header
     .title
       h1 {{$route.meta.title}}
-      router-link(to='/guest/new')
-        el-button(type='text') 添加嘉宾
+      router-link(to='/activity/new')
+        el-button(type='text') 添加活动
     .filter
       //- el-button(type='text',
       //-           @click='params.status = "all"',
@@ -22,10 +22,10 @@
                v-model="params.show_name",
                @keyup.enter.native='fetch',
                :on-icon-click="fetch")
-  el-table(:data='listData.guests' border)
-    el-table-column(prop='name', label='姓名')
-    el-table-column(prop='company', label='公司', width="150")
-    el-table-column(prop='duty', label='职位', width="140")
+  el-table(:data='listData.activities' border)
+    el-table-column(prop='title', label='活动标题')
+    el-table-column(prop='activity_time', label='活动时间', width="180")
+    el-table-column(prop='activity_type', label='活动类型', width="140")
     el-table-column(prop='created_at', label='创建时间', width="180")
     el-table-column(label='操作', width="140")
       template(scope='scope')
@@ -44,7 +44,7 @@
 import tools from 'tools'
 import api from 'stores/api'
 
-const url = 'admin/guests'
+const url = 'admin/activities'
 
 export default {
   data () {
@@ -55,7 +55,7 @@ export default {
         page: 1
       },
       listData: {
-        guests: [],
+        activities: [],
         meta: {
           total_count: 0,
           limit_value: 0
@@ -79,8 +79,9 @@ export default {
       }
       api.get(url, {params: params}).then((result) => {
         this.listData = result.data
-        this.listData.guests.forEach(el => {
+        this.listData.activities.forEach(el => {
           el.created_at = el.created_at ? tools.moment(new Date(el.created_at)) : ''
+          el.activity_time = el.activity_time ? tools.moment(new Date(el.activity_time)) : ''
         })
       }).catch((err) => {
         console.log(err)
@@ -100,7 +101,7 @@ export default {
       tools.deleteConfirm(this, destroy)
     },
     handleEdit (row) {
-      this.$router.push(`guest/${row.id}`)
+      this.$router.push(`activity/${row.id}`)
     }
   },
   watch: {

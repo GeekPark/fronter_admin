@@ -6,12 +6,17 @@ import Observers from 'views/Observers.vue'
 import ObserverInfo from 'views/ObserverInfo.vue'
 import ObserverApply from 'views/ObserverApply.vue'
 import ObserverApplyInfo from 'views/ObserverApplyInfo.vue'
+
 import Members from 'views/Members.vue'
 import MemberInfo from 'views/MemberInfo.vue'
 import MemberApply from 'views/MemberApply.vue'
 import MemberApplyInfo from 'views/MemberApplyInfo.vue'
-import Timeline from 'views/Timeline.vue'
+
 import Guests from 'views/Guests.vue'
+import GuestInfo from 'views/GuestInfo.vue'
+
+import Activities from 'views/Activities.vue'
+import ActivityInfo from 'views/ActivityInfo.vue'
 
 import Errors from 'views/Errors.vue'
 
@@ -25,10 +30,30 @@ const router = new VueRouter({
       component: Guests,
       meta: {title: '嘉宾管理'}
     },
-    { path: '/timeline',
-      name: 'timeline',
-      component: Timeline,
-      meta: {title: '动态管理'}
+    { path: '/guest/new',
+      name: 'GuestInfo',
+      component: GuestInfo,
+      meta: {title: '添加嘉宾'}
+    },
+    { path: '/guest/:id',
+      name: 'GuestInfo',
+      component: GuestInfo,
+      meta: {title: '嘉宾'}
+    },
+    { path: '/activities',
+      name: 'Activities',
+      component: Activities,
+      meta: {title: '活动管理'}
+    },
+    { path: '/activity/new',
+      name: 'ActivityInfo',
+      component: ActivityInfo,
+      meta: {title: '添加活动'}
+    },
+    { path: '/activity/:id',
+      name: 'ActivityInfo',
+      component: ActivityInfo,
+      meta: {title: '活动'}
     },
     { path: '/member/apply',
       name: 'MemberApply',

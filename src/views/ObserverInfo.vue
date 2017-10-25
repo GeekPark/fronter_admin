@@ -31,14 +31,10 @@
 <script>
 // import tools from 'tools'
 import api from 'stores/api'
-import UserInfo from 'components/UserInfo.vue'
 
 const url = 'admin/observers_manages'
 
 export default {
-  components: {
-    'info': UserInfo
-  },
   data () {
     return {
       info: {},

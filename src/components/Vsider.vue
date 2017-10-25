@@ -11,7 +11,7 @@
         el-menu-item(index='/members')  会员管理
         el-menu-item(index='/observers')  观察员管理
         el-menu-item(index='/guests')  嘉宾管理
-        el-menu-item(index='/timelines')  动态管理
+        el-menu-item(index='/activities')  活动管理
 </template>
 
 <script>
