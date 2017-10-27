@@ -21,7 +21,7 @@
                   :value='item[0]',
                   :key='item[0]')
     el-form-item(label='活动嘉宾')
-      search-guest(:callback='searchGuest', :guests='info.guest')
+      search-guest(:callback='searchGuest', :guests='info.guests')
     el-form-item(label='文章链接')
       el-input(v-model='params.article_link')
     el-form-item(label='活动头图')
@@ -55,7 +55,7 @@ export default {
         avatar_url: '',
         avatar_id: '',
         activity_type: '',
-        guest: []
+        guests: []
       },
       activity_types: [
         ['workshop', '前沿工作坊'],
@@ -102,8 +102,8 @@ export default {
       this.params.avatar_url = 'deleted'
       this.params.avatar_id = ''
     },
-    searchGuest (guest) {
-      this.params.guest = guest
+    searchGuest (guests) {
+      this.params.guests = guests
     }
   },
   mounted () {
