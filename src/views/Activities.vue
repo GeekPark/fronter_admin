@@ -77,11 +77,17 @@ export default {
       if (params.show_name === '') {
         delete params.show_name
       }
+      const types = this.$store.state.activity_types
       api.get(url, {params: params}).then((result) => {
         this.listData = result.data
         this.listData.activities.forEach(el => {
           el.created_at = el.created_at ? tools.moment(new Date(el.created_at)) : ''
           el.activity_time = el.activity_time ? tools.moment(new Date(el.activity_time)) : ''
+          types.forEach(sub => {
+            if (sub[0] === el.activity_type) {
+              el.activity_type = sub[1]
+            }
+          })
         })
       }).catch((err) => {
         console.log(err)

@@ -57,11 +57,7 @@ export default {
         activity_type: '',
         guests: []
       },
-      activity_types: [
-        ['workshop', '前沿工作坊'],
-        ['camp', '超频之旅'],
-        ['study', '近场研究']
-      ]
+      activity_types: this.$store.state.activity_types
     }
   },
   methods: {
