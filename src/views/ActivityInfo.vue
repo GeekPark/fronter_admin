@@ -7,7 +7,8 @@
     el-form-item(label='活动标题')
       el-input(placeholder='', v-model='params.title')
     el-form-item(label='简介')
-      el-input(type='textarea',  v-model='params.description')
+      el-input(type='textarea',  v-model='params.description', :autosize="{ minRows: 2, maxRows: 10}")
+      .words 字数 {{params.description.length}}
     el-form-item(label='活动时间')
       el-date-picker(v-model='params.activity_time',
                      type='datetime',
@@ -114,6 +115,13 @@ export default {
 .state
   margin-bottom 20px
 .el-input, .el-textarea
-  width 30%
+  width 50%
   min-width 200px
+.words
+  text-align right
+  margin-top 0
+  padding-right 30px
+  font-size 12px
+  color #959694
+  width 50%
 </style>
